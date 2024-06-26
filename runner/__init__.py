@@ -1,5 +1,7 @@
 REGISTRY = {}
 
-from .qmix.episode_runner import EpisodeRunner
-REGISTRY["qmix_episode"] = EpisodeRunner
+from .episode_runner import EpisodeRunner
+REGISTRY["episode"] = EpisodeRunner
 
+from .parallel_runner import ParallelRunner
+REGISTRY["parallel"] = ParallelRunner

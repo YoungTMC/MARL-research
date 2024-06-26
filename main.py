@@ -22,8 +22,8 @@ ex = Experiment("pymarl")
 ex.logger = logger
 ex.captured_out_filter = apply_backspaces_and_linefeeds
 
-results_path = join(dirname(dirname(abspath(__file__))))
-
+# results_path = join(dirname(dirname(abspath(__file__))))
+results_path = os.path.join(os.path.dirname(__file__), "result")
 
 @ex.main
 def my_main(_run, _config, _log):
@@ -55,7 +55,7 @@ def _get_config(params, arg_name, subfolder):
         with open(os.path.join(os.path.dirname(__file__), "config", subfolder, "{}.yaml".format(config_name)),
                   "r") as f:
             try:
-                config_dict = yaml.load(f)
+                config_dict = yaml.load(f, Loader=yaml.FullLoader)
             except yaml.YAMLError as exc:
                 assert False, "{}.yaml error: {}".format(config_name, exc)
         return config_dict
@@ -89,12 +89,15 @@ def parse_command(params, key, default):
 
 
 if __name__ == '__main__':
+    # get command line parameters
     params = deepcopy(sys.argv)
 
     # Get the defaults from default.yaml
+    # os.path.dirname(__file__): get dir_path of current file, e.g.: 'E:\\zhaojunyang\\PycharmProjects\\research'
     with open(os.path.join(os.path.dirname(__file__), "config", "default.yaml"), "r") as f:
         try:
-            config_dict = yaml.load(f)
+            # need to indicate Loader since version 5.1
+            config_dict = yaml.load(f, Loader=yaml.FullLoader)
         except yaml.YAMLError as exc:
             assert False, "default.yaml error: {}".format(exc)
 
@@ -111,8 +114,8 @@ if __name__ == '__main__':
     # Save to disk by default for sacred
     map_name = parse_command(params, "env_args.map_name", config_dict['env_args']['map_name'])
     algo_name = parse_command(params, "name", config_dict['name'])
-    local_results_path = parse_command(params, "local_results_path", config_dict['local_results_path'])
-    file_obs_path = join(results_path, local_results_path, "sacred", map_name, algo_name)
+    # local_results_path = parse_command(params, "local_results_path", config_dict['local_results_path'])
+    file_obs_path = join(results_path, "sacred", map_name, algo_name)
 
     logger.info("Saving to FileStorageObserver in {}.".format(file_obs_path))
     ex.observers.append(FileStorageObserver.create(file_obs_path))
