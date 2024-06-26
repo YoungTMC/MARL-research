@@ -1,4 +1,4 @@
-from env import REGISTRY as env_REGISTRY
+from envs import REGISTRY as env_REGISTRY
 from functools import partial
 from tools.buffer.buffer import  EpisodeBatch
 import numpy as np

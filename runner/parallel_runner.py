@@ -1,4 +1,4 @@
-from env import REGISTRY as env_REGISTRY
+from envs import REGISTRY as env_REGISTRY
 from functools import partial
 from tools.buffer.buffer import EpisodeBatch
 from multiprocessing import Pipe, Process
@@ -112,7 +112,7 @@ class ParallelRunner:
         save_probs = getattr(self.args, "save_probs", False)
         while True:
             # Pass the entire batch of experiences up till now to the agents
-            # Receive the actions for each agent at this timestep in a batch for each un-terminated env
+            # Receive the actions for each agent at this timestep in a batch for each un-terminated envs
             if save_probs:
                 actions, probs = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env,
                                                          bs=envs_not_terminated, test_mode=test_mode)
@@ -131,13 +131,13 @@ class ParallelRunner:
 
             self.batch.update(actions_chosen, bs=envs_not_terminated, ts=self.t, mark_filled=False)
 
-            # Send actions to each env
+            # Send actions to each envs
             action_idx = 0
             for idx, parent_conn in enumerate(self.parent_conns):
-                if idx in envs_not_terminated:  # We produced actions for this env
-                    if not terminated[idx]:  # Only send the actions to the env if it hasn't terminated
+                if idx in envs_not_terminated:  # We produced actions for this envs
+                    if not terminated[idx]:  # Only send the actions to the envs if it hasn't terminated
                         parent_conn.send(("step", cpu_actions[action_idx]))
-                    action_idx += 1  # actions is not a list over every env
+                    action_idx += 1  # actions is not a list over every envs
 
             # # Update envs_not_terminated
             # envs_not_terminated = [b_idx for b_idx, termed in enumerate(terminated) if not termed]
@@ -156,7 +156,7 @@ class ParallelRunner:
                 "avail_actions": [],
                 "obs": []
             }
-            # Receive data back for each unterminated env
+            # Receive data back for each unterminated envs
             for idx, parent_conn in enumerate(self.parent_conns):
                 if not terminated[idx]:
                     data = parent_conn.recv()
@@ -206,7 +206,7 @@ class ParallelRunner:
         if not test_mode:
             self.t_env += self.env_steps_this_run
 
-        # Get stats back for each env
+        # Get stats back for each envs
         for parent_conn in self.parent_conns:
             parent_conn.send(("get_stats", None))
 

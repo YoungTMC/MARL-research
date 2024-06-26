@@ -75,7 +75,7 @@ class FootballEnv(MultiAgentEnv):
         return obs, state, rewards, dones, infos, ava
 
     def render(self, **kwargs):
-        # self.env.render(**kwargs)
+        # self.envs.render(**kwargs)
         pass
 
     def close(self):

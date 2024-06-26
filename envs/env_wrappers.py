@@ -661,7 +661,7 @@ class ChooseGuardSubprocVecEnv(ShareVecEnv):
         self.closed = True
 
 
-# single env
+# single envs
 class DummyVecEnv(ShareVecEnv):
     def __init__(self, env_fns):
         self.envs = [fn() for fn in env_fns]

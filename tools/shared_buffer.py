@@ -21,8 +21,8 @@ def _shuffle_agent_grid(x, y):
 class SharedReplayBuffer(object):
     """
     Buffer to store training data.
-    :param args: (argparse.Namespace) arguments containing relevant model, policy, and env information.
-    :param num_agents: (int) number of agents in the env.
+    :param args: (argparse.Namespace) arguments containing relevant model, policy, and envs information.
+    :param num_agents: (int) number of agents in the envs.
     :param obs_space: (gym.Space) observation space of agents.
     :param cent_obs_space: (gym.Space) centralized observation space of agents.
     :param act_space: (gym.Space) action space for agents.
@@ -92,7 +92,7 @@ class SharedReplayBuffer(object):
                value_preds, rewards, masks, bad_masks=None, active_masks=None, available_actions=None):
         """
         Insert data into the buffer.
-        :param share_obs: (argparse.Namespace) arguments containing relevant model, policy, and env information.
+        :param share_obs: (argparse.Namespace) arguments containing relevant model, policy, and envs information.
         :param obs: (np.ndarray) local agent observations.
         :param rnn_states_actor: (np.ndarray) RNN states for actor network.
         :param rnn_states_critic: (np.ndarray) RNN states for critic network.
@@ -102,7 +102,7 @@ class SharedReplayBuffer(object):
         :param rewards: (np.ndarray) reward collected at each step.
         :param masks: (np.ndarray) denotes whether the environment has terminated or not.
         :param bad_masks: (np.ndarray) action space for agents.
-        :param active_masks: (np.ndarray) denotes whether an agent is active or dead in the env.
+        :param active_masks: (np.ndarray) denotes whether an agent is active or dead in the envs.
         :param available_actions: (np.ndarray) actions available to each agent. If None, all actions are available.
         """
         self.share_obs[self.step + 1] = share_obs.copy()
@@ -127,7 +127,7 @@ class SharedReplayBuffer(object):
                      value_preds, rewards, masks, bad_masks=None, active_masks=None, available_actions=None):
         """
         Insert data into the buffer. This insert function is used specifically for Hanabi, which is turn based.
-        :param share_obs: (argparse.Namespace) arguments containing relevant model, policy, and env information.
+        :param share_obs: (argparse.Namespace) arguments containing relevant model, policy, and envs information.
         :param obs: (np.ndarray) local agent observations.
         :param rnn_states_actor: (np.ndarray) RNN states for actor network.
         :param rnn_states_critic: (np.ndarray) RNN states for critic network.
@@ -137,7 +137,7 @@ class SharedReplayBuffer(object):
         :param rewards: (np.ndarray) reward collected at each step.
         :param masks: (np.ndarray) denotes whether the environment has terminated or not.
         :param bad_masks: (np.ndarray) denotes indicate whether whether true terminal state or due to episode limit
-        :param active_masks: (np.ndarray) denotes whether an agent is active or dead in the env.
+        :param active_masks: (np.ndarray) denotes whether an agent is active or dead in the envs.
         :param available_actions: (np.ndarray) actions available to each agent. If None, all actions are available.
         """
         self.share_obs[self.step] = share_obs.copy()

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/envs python
 # -*- coding: UTF-8 -*-
 '''
 @Project ：API-Network 

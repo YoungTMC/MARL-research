@@ -1,7 +1,7 @@
 # --- Defaults ---
 
 # --- pymarl options ---
-runner: "episode" # Runs 1 env for an episode
+runner: "episode" # Runs 1 envs for an episode
 mac: "base_controller" # Basic controller
 env: "sc2" # Environment name
 env_args: {} # Arguments for the environment

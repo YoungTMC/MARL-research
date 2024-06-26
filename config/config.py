@@ -4,8 +4,8 @@ import argparse
 def get_config():
     """
     The configuration parser for hyper-parameters of all environment.
-    Please reach each `scripts/train/<env>_runner.py` file to find private hyper-parameters
-    only used in <env>.
+    Please reach each `scripts/train/<envs>_runner.py` file to find private hyper-parameters
+    only used in <envs>.
 
     Prepare parameters:
         --algorithm_name <algorithm_name>
@@ -27,7 +27,7 @@ def get_config():
         --n_render_rollout_threads <int>
             number of parallel envs for rendering, could only be set as 1 for some environments.
         --num_env_steps <int>
-            number of env steps to train (default: 10e6)
+            number of envs steps to train (default: 10e6)
         --user_name <str>
             [for wandb usage], to specify user's name for simply collecting training data.
         --use_wandb
@@ -37,7 +37,7 @@ def get_config():
         --env_name <str>
             specify the name of environment
         --use_obs_instead_of_state
-            [only for some env] by default False, will use global state; or else will use concatenated local obs.
+            [only for some envs] by default False, will use global state; or else will use concatenated local obs.
 
     Replay Buffer parameters:
         --episode_length <int>
@@ -143,9 +143,9 @@ def get_config():
         --save_gifs
             by default, do not save render video. If set, save video.
         --use_render
-            by default, do not render the env during training. If set, start render. Note: something, the environment has internal render process which is not controlled by this hyperparam.
+            by default, do not render the envs during training. If set, start render. Note: something, the environment has internal render process which is not controlled by this hyperparam.
         --render_episodes <int>
-            the number of episodes to render a given env
+            the number of episodes to render a given envs
         --ifi <float>
             the play interval of each rendered image in saved video.
 
@@ -183,7 +183,7 @@ def get_config():
     parser.add_argument("--use_wandb", action='store_false', default=False,
                         help="[for wandb usage], by default True, will log date to wandb server. or else will use tensorboard to log data.")
 
-    # env parameters
+    # envs parameters
     # env_name: football, StarCraft2
     parser.add_argument("--env_name", type=str, default='football', help="specify the name of environment")
     parser.add_argument("--use_obs_instead_of_state", action='store_true',
@@ -296,8 +296,8 @@ def get_config():
     parser.add_argument("--save_gifs", action='store_true', default=False,
                         help="by default, do not save render video. If set, save video.")
     parser.add_argument("--use_render", action='store_true', default=False,
-                        help="by default, do not render the env during training. If set, start render. Note: something, the environment has internal render process which is not controlled by this hyperparam.")
-    parser.add_argument("--render_episodes", type=int, default=5, help="the number of episodes to render a given env")
+                        help="by default, do not render the envs during training. If set, start render. Note: something, the environment has internal render process which is not controlled by this hyperparam.")
+    parser.add_argument("--render_episodes", type=int, default=5, help="the number of episodes to render a given envs")
     parser.add_argument("--ifi", type=float, default=0.1,
                         help="the play interval of each rendered image in saved video.")
 
