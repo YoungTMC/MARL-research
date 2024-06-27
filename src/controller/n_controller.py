@@ -2,8 +2,8 @@ from .base_controller import BaseMultiAgentController
 
 
 class NMultiAgentController(BaseMultiAgentController):
-    def __init__(self, scheme, args):
-        super(NMultiAgentController, self).__init__(scheme, args)
+    def __init__(self, scheme, groups, args):
+        super(NMultiAgentController, self).__init__(scheme, groups, args)
 
     def select_actions(self, ep_batch, t_ep, t_env, bs=slice(None), test_mode=False):
         if t_ep == 0:

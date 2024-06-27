@@ -1,31 +1,33 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import numpy as np
 
 
 class QMIX(nn.Module):
     def __init__(self, args):
         super(QMIX, self).__init__()
         self.args = args
+        self.state_dim = int(np.prod(args.state_shape))
 
         if self.args.two_hyper_layers:
             self.hyper_w1 = nn.Sequential(
-                nn.Linear(self.args.state_dim, self.args.hyper_hidden_dim),
+                nn.Linear(self.state_dim, self.args.hyper_hidden_dim),
                 nn.ReLU(),
                 nn.Linear(self.args.hyper_hidden_dim, self.args.n_agents * self.args.qmix_hidden_dim)
             )
             self.hyper_w2 = nn.Sequential(
-                nn.Linear(self.args.state_dim, self.args.hyper_hidden_dim),
+                nn.Linear(self.state_dim, self.args.hyper_hidden_dim),
                 nn.ReLU(),
                 nn.Linear(self.args.hyper_hidden_dim, self.args.qmix_hidden_dim * 1)
             )
         else:
-            self.hyper_w1 = nn.Linear(self.args.state_dim, self.args.n_agents * self.args.qmix_hidden_dim)
-            self.hyper_w2 = nn.Linear(self.args.state_dim, self.args.qmix_hidden_dim * 1)
+            self.hyper_w1 = nn.Linear(self.state_dim, self.args.n_agents * self.args.qmix_hidden_dim)
+            self.hyper_w2 = nn.Linear(self.state_dim, self.args.qmix_hidden_dim * 1)
 
-        self.hyper_b1 = nn.Linear(self.args.state_dim, self.args.qmix_hidden_dim)
+        self.hyper_b1 = nn.Linear(self.state_dim, self.args.qmix_hidden_dim)
         self.hyper_b2 = nn.Sequential(
-            nn.Linear(self.args.state_dim, self.args.hyper_hidden_dim),
+            nn.Linear(self.state_dim, self.args.hyper_hidden_dim),
             nn.ReLU(),
             nn.Linear(self.args.hyper_hidden_dim, 1)
         )
@@ -39,7 +41,7 @@ class QMIX(nn.Module):
         """
         episode_num = q_values.size(0)
         q_values = q_values.view(-1, 1, self.args.n_agents)
-        states = states.reshape(-1, self.args.state_dim)
+        states = states.reshape(-1, self.state_dim)
 
         w1 = torch.abs(self.hyper_w1(states))
         b1 = self.hyper_b1(states)

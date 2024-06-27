@@ -9,10 +9,10 @@ def get_parameters_num(param_list):
 
 
 class BaseMultiAgentController(object):
-    def __init__(self, args, obs_scheme):
+    def __init__(self, obs_scheme, groups, args):
         self.args = args
         self.n_agents = args.n_agents
-        self.agent_output_type = args.agent_ouput_type
+        self.agent_output_type = args.agent_output_type
         self.input_shape = self._get_input_shape(obs_scheme)
         self._build_agents(self.input_shape)
         self.action_selector = qmix_selector_REGISTRY[self.args.action_selector](args)
@@ -88,7 +88,7 @@ class BaseMultiAgentController(object):
     def _get_input_shape(self, obs_scheme):
         input_shape = obs_scheme["obs"]["vshape"]
         if self.args.obs_last_action:
-            input_shape += obs_scheme["action_onehot"]["vshape"][0]
+            input_shape += obs_scheme["actions_onehot"]["vshape"][0]
         if self.args.obs_agent_id:
             input_shape += self.n_agents
 
