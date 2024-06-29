@@ -3,7 +3,7 @@ from torch.distributions import Categorical
 from .episilon_scheduler import DecayThenFlatScheduler
 
 
-qmix_selector_REGISTRY = {}
+action_selector_REGISTRY = {}
 
 
 class EpsilonGreedyActionSelector:
@@ -34,4 +34,4 @@ class EpsilonGreedyActionSelector:
         return picked_actions
 
 
-qmix_selector_REGISTRY["epsilon_greedy"] = EpsilonGreedyActionSelector
+action_selector_REGISTRY["epsilon_greedy"] = EpsilonGreedyActionSelector

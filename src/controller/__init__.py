@@ -5,3 +5,5 @@ REGISTRY["base_controller"] = BaseMultiAgentController
 
 from .n_controller import NMultiAgentController
 REGISTRY["n_controller"] = NMultiAgentController
+
+from .hpn_controller import HPNMultiAgentController

@@ -1,7 +1,7 @@
 import torch
 
-from tools.action_selectors.qmix_selector import qmix_selector_REGISTRY
-from modules.qmix.agent_network import agent_REGISTRY
+from tools.action_selectors.action_selector import action_selector_REGISTRY
+from modules.agents import agent_REGISTRY
 
 
 def get_parameters_num(param_list):
@@ -15,7 +15,7 @@ class BaseMultiAgentController(object):
         self.agent_output_type = args.agent_output_type
         self.input_shape = self._get_input_shape(obs_scheme)
         self._build_agents(self.input_shape)
-        self.action_selector = qmix_selector_REGISTRY[self.args.action_selector](args)
+        self.action_selector = action_selector_REGISTRY[self.args.action_selector](args)
 
         self.hidden_states = None
 

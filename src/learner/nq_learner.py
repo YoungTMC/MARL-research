@@ -51,7 +51,7 @@ def calculate_n_step_td_target(target_mixer, target_max_qvals, batch, rewards, t
         return targets.detach()
 
 
-class QMIXLearner:
+class NQLearner:
     def __init__(self, mac, scheme, logger, args):
         self.args = args
         self.mac = mac

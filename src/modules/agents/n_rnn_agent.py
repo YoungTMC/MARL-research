@@ -7,9 +7,6 @@ QMIX RNN Agents:
 """
 
 
-agent_REGISTRY = {}
-
-
 class NRNNAgent(nn.Module):
     def __init__(self, input_dim, args):
         super(NRNNAgent, self).__init__()
@@ -43,9 +40,6 @@ class NRNNAgent(nn.Module):
         :return: initialized hidden state
         """
         return self.mlp1.weight.new(1, self.args.rnn_hidden_dim).zero_()
-
-
-agent_REGISTRY["n_rnn"] = NRNNAgent
 
 
 def init(module, weight_init, bias_init, gain=1):

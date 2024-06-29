@@ -17,10 +17,11 @@ target_update_interval: 200
 
 # use the Q_Learner to train
 runner: "parallel"
-mac: "n_controller"
+mac: "hpn_controller"
 learner: "nq_learner"
 mixer: "qmix"
-agent: "n_rnn"
+#agent: "hpn_rnn"
+agent: "hpns_rnn"
 agent_output_type: q
 
 qmix_hidden_dim: 32
@@ -31,18 +32,13 @@ td_lambda: 0.6 # 0.3 for 6h_vs_8z
 optimizer: 'adam'
 q_lambda: False
 
-# rnn layer normalization
-use_layer_norm: False
+hpn_hyper_dim: 64
+hpn_hyper_activation: 'relu'
 
-# orthogonal init for DNN
-use_orthogonal: False
-gain: 0.01
+hpn_head_num: 1 # 2 for 3s_vs_5z and 6h_vs_8z
 
-# Priority experience replay
-use_per: False
-per_alpha: 0.6
-per_beta: 0.4
-return_priority: False
 
-#name: "qmix_env=8_adam_td_lambda"
-name: "qmix"
+name: "hpn_qmix"
+
+obs_agent_id: True # Include the agent's one_hot id in the observation
+obs_last_action: False # Include the agent's last action (one_hot) in the observation

@@ -1,4 +1,4 @@
 REGISTRY = {}
 
-from .qmix_learner import QMIXLearner
-REGISTRY["qmix_learner"] = QMIXLearner
+from .nq_learner import NQLearner
+REGISTRY["nq_learner"] = NQLearner
